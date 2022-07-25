@@ -1,0 +1,9 @@
+name: PlantsVSZombies
+version: '${project.version}'
+main: dev.fumaz.plantsvszombies.PlantsVsZombies
+api-version: 1.19
+authors: [ Fumaz ]
+website: https://fumaz.dev
+commands:
+  yard: { }
+  spawnzombie: { }
