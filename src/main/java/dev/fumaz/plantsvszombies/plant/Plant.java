@@ -9,17 +9,20 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 
 public enum Plant {
-    SUNFLOWER(Sunflower.class, Bee.class, Material.BEE_SPAWN_EGG, 50, 7500),
-    PEASHOOTER(Peashooter.class, GlowSquid.class, Material.GLOW_SQUID_SPAWN_EGG, 100, 7500),
-    CHERRY_BOMB(CherryBomb.class, Strider.class, Material.STRIDER_SPAWN_EGG, 150, 50 * 1000);
+    SUNFLOWER(Sunflower.class, Bee.class, Material.BEE_SPAWN_EGG, 50, RechargeTime.FAST),
+    PEASHOOTER(Peashooter.class, GlowSquid.class, Material.GLOW_SQUID_SPAWN_EGG, 100, RechargeTime.FAST),
+    CHERRY_BOMB(CherryBomb.class, Strider.class, Material.STRIDER_SPAWN_EGG, 150, RechargeTime.VERY_SLOW),
+    WALLNUT(Wallnut.class, Blaze.class, Material.BLAZE_SPAWN_EGG, 50, RechargeTime.SLOW),
+    POTATO_MINE(PotatoMine.class, Shulker.class, Material.SHULKER_SPAWN_EGG, 25, RechargeTime.SLOW),
+    SQUASH(Squash.class, Creeper.class, Material.CREEPER_SPAWN_EGG, 50, RechargeTime.SLOW);
 
     private final Class<? extends AbstractPlant<? extends Mob>> plantClass;
     private final Class<? extends Mob> mobClass;
     private final Material material;
     private final int price;
-    private final int recharge;
+    private final RechargeTime recharge;
 
-    Plant(Class<? extends AbstractPlant<? extends Mob>> plantClass, Class<? extends Mob> mobClass, Material material, int price, int recharge) {
+    Plant(Class<? extends AbstractPlant<? extends Mob>> plantClass, Class<? extends Mob> mobClass, Material material, int price, RechargeTime recharge) {
         this.plantClass = plantClass;
         this.mobClass = mobClass;
         this.material = material;
@@ -46,7 +49,7 @@ public enum Plant {
     }
 
     public int getRecharge() {
-        return recharge;
+        return recharge.time;
     }
 
     public String getDisplayName() {
@@ -64,4 +67,15 @@ public enum Plant {
         player.getInventory().addItem(getItemStack());
     }
 
+    private enum RechargeTime {
+        FAST(7500),
+        SLOW(30000),
+        VERY_SLOW(50000);
+
+        private final int time;
+
+        RechargeTime(int time) {
+            this.time = time;
+        }
+    }
 }
