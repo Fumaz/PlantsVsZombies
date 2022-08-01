@@ -34,7 +34,7 @@ public class Peashooter extends AbstractPlant<GlowSquid> {
 
     @Override
     public void onSpawn() {
-        entity.setRotation(-90, 0);
+        // entity.setRotation(-90, 0);
     }
 
     @Override
@@ -54,11 +54,9 @@ public class Peashooter extends AbstractPlant<GlowSquid> {
 
     @EventHandler
     public void onProjectileHit(ProjectileHitEvent event) {
-        if (!(event.getEntity() instanceof Snowball)) {
+        if (!(event.getEntity() instanceof Snowball snowball)) {
             return;
         }
-
-        Snowball snowball = (Snowball) event.getEntity();
 
         if (!projectiles.remove(snowball)) {
             return;

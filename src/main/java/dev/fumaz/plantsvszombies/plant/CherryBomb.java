@@ -32,6 +32,11 @@ public class CherryBomb extends AbstractPlant<Strider> {
     }
 
     @Override
+    public boolean isInvincible() {
+        return true;
+    }
+
+    @Override
     public void onSpawn() {
         getWorld().playSound(getLocation(), Sound.ENTITY_TNT_PRIMED, 1f, 1f);
 

@@ -14,7 +14,8 @@ public enum Plant {
     CHERRY_BOMB(CherryBomb.class, Strider.class, Material.STRIDER_SPAWN_EGG, 150, RechargeTime.VERY_SLOW),
     WALLNUT(Wallnut.class, Blaze.class, Material.BLAZE_SPAWN_EGG, 50, RechargeTime.SLOW),
     POTATO_MINE(PotatoMine.class, Shulker.class, Material.SHULKER_SPAWN_EGG, 25, RechargeTime.SLOW),
-    SQUASH(Squash.class, Creeper.class, Material.CREEPER_SPAWN_EGG, 50, RechargeTime.SLOW);
+    SQUASH(Squash.class, Creeper.class, Material.CREEPER_SPAWN_EGG, 50, RechargeTime.SLOW),
+    JALAPENO(Jalapeno.class, Cat.class, Material.CAT_SPAWN_EGG, 125, RechargeTime.VERY_SLOW);
 
     private final Class<? extends AbstractPlant<? extends Mob>> plantClass;
     private final Class<? extends Mob> mobClass;

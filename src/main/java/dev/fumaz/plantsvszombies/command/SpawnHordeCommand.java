@@ -10,7 +10,11 @@ import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class SpawnZombieCommand implements PlayerCommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SpawnHordeCommand implements PlayerCommandExecutor {
+
 
     @Override
     public void onCommand(@NotNull Player player, @NotNull Command command, @NotNull String[] strings) {
@@ -22,10 +26,23 @@ public class SpawnZombieCommand implements PlayerCommandExecutor {
         }
 
         Block target = player.getTargetBlock(100);
-        Zombie zombie = Zombie.valueOf(strings[0].toUpperCase());
-        yard.getRow(target.getLocation()).addZombie(zombie);
 
-        player.sendMessage(ChatColor.GREEN + "You have spawned a " + ChatColor.LIGHT_PURPLE + zombie.getDisplayName() + ChatColor.GREEN + "!");
+        List<Zombie> zombies = new ArrayList<>();
+        zombies.add(Zombie.FLAG);
+
+        for (String string : strings) {
+            zombies.add(Zombie.valueOf(string.toUpperCase()));
+        }
+
+        zombies.forEach(zombie -> {
+            if (zombie == Zombie.FLAG) {
+                yard.getRow(target.getLocation()).addZombie(zombie);
+            } else {
+                Randoms.choice(yard.getRows()).addZombie(zombie);
+            }
+        });
+
+        player.sendMessage(ChatColor.GREEN + "You have spawned a horde of zombies!");
     }
 
 }

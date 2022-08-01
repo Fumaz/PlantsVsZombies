@@ -3,8 +3,6 @@ package dev.fumaz.plantsvszombies.yard;
 import dev.fumaz.commons.bukkit.interfaces.FListener;
 import dev.fumaz.commons.bukkit.misc.Scheduler;
 import dev.fumaz.commons.math.Randoms;
-import dev.fumaz.plantsvszombies.level.AbstractLevel;
-import dev.fumaz.plantsvszombies.level.Level;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
@@ -30,14 +28,12 @@ public class Yard implements FListener {
     private final List<Row> rows;
 
     private final BukkitTask tickTask;
-    private final BukkitTask levelTask;
     private final CardsManager cardsManager;
 
     private final Player player;
 
-    private Level level;
-    private AbstractLevel levelImplementation;
     private int suns;
+    private int level;
 
 
     public Yard(JavaPlugin plugin, Player player) {
@@ -49,6 +45,7 @@ public class Yard implements FListener {
         this.cardsManager = new CardsManager(plugin, this);
         this.rows = new ArrayList<>();
         this.suns = 100;
+        this.level = 0;
 
         addRow(new Row(this,
                 new BoundingBox(11, 64, 4, 10, 64, 3),
@@ -127,7 +124,6 @@ public class Yard implements FListener {
             rows.forEach(Row::tick);
             player.sendActionBar(ChatColor.YELLOW + "" + ChatColor.BOLD + suns + " ☀");
         }, 0, 1);
-        this.levelTask = Scheduler.of(plugin).runTaskTimer(() -> levelImplementation.tick(), 0, 20);
 
         createNextSunTask();
         register(plugin);
@@ -142,14 +138,10 @@ public class Yard implements FListener {
     }
 
     public void nextLevel() {
-        if (level != null && level.ordinal() == Level.values().length - 1) {
-            return;
-        }
+        level += 1;
+        suns = 100;
 
-        level = Level.values()[(level == null ? -1 : level.ordinal()) + 1];
-        levelImplementation = level.create(this);
-
-        player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "Level " + (level.ordinal() + 1), null);
+        player.sendTitle(ChatColor.GREEN + "" + ChatColor.BOLD + "LEVEL " + level, null);
 
         getRows().forEach(row -> row.getTiles().forEach(tile -> {
             if (tile.getPlant() == null) {
@@ -158,7 +150,6 @@ public class Yard implements FListener {
 
             tile.getPlant().die();
         }));
-        suns = 100;
     }
 
     public boolean hasZombies() {

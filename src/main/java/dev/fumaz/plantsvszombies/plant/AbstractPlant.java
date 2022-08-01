@@ -96,6 +96,10 @@ public abstract class AbstractPlant<T extends Mob> implements FListener {
         return Integer.MAX_VALUE;
     }
 
+    public boolean isInvincible() {
+        return false;
+    }
+
     public boolean canAttackBehind() {
         return false;
     }
@@ -106,6 +110,10 @@ public abstract class AbstractPlant<T extends Mob> implements FListener {
 
     public void damage(double damage) {
         if (isDead()) {
+            return;
+        }
+
+        if (isInvincible()) {
             return;
         }
 

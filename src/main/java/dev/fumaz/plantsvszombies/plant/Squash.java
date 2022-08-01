@@ -22,16 +22,20 @@ public class Squash extends AbstractPlant<Creeper> {
     }
 
     @Override
+    public boolean isInvincible() {
+        return true;
+    }
+
+    @Override
     public void attack(AbstractZombie<?> zombie) {
         if (zombie.getLocation().distanceSquared(getLocation()) > 4) {
             return;
         }
 
-        entity.getPathfinder().setCanFloat(true);
-        entity.getPathfinder().moveTo(zombie.getLocation().add(0, 2.5, 0));
+        entity.setVelocity(zombie.getLocation().subtract(getLocation()).add(0, 0.5, 0).toVector().normalize().multiply(0.5));
 
         Scheduler.of(plugin).runTaskLater(task -> {
-            entity.getPathfinder().moveTo(zombie.getLocation());
+            entity.setVelocity(zombie.getLocation().subtract(getLocation()).toVector().normalize().multiply(0.5));
 
             Scheduler.of(plugin).runTaskLater(() -> {
                 zombie.damage(getDamage());

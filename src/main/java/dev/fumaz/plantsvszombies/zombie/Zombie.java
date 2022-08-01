@@ -7,7 +7,12 @@ import org.bukkit.entity.Mob;
 
 public enum Zombie {
     DEFAULT(Default.class, org.bukkit.entity.Zombie.class),
-    CONEHEAD(Conehead.class, org.bukkit.entity.Zombie.class);
+    FLAG(Flag.class, org.bukkit.entity.Zombie.class),
+    CONEHEAD(Conehead.class, org.bukkit.entity.Zombie.class),
+    BUCKETHEAD(Buckethead.class, org.bukkit.entity.Zombie.class),
+    FOOTBALL(Football.class, org.bukkit.entity.Zombie.class),
+    NEWSPAPER(Newspaper.class, org.bukkit.entity.Zombie.class),
+    SCREEN_DOOR(ScreenDoor.class, org.bukkit.entity.Zombie.class);
 
     private final Class<? extends AbstractZombie<? extends Mob>> plantClass;
     private final Class<? extends Mob> mobClass;
