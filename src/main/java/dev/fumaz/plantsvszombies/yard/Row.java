@@ -1,5 +1,7 @@
 package dev.fumaz.plantsvszombies.yard;
 
+import dev.fumaz.commons.collection.Pair;
+import dev.fumaz.plantsvszombies.plant.AbstractPlant;
 import dev.fumaz.plantsvszombies.zombie.AbstractZombie;
 import dev.fumaz.plantsvszombies.zombie.Zombie;
 import org.bukkit.Location;
@@ -92,6 +94,27 @@ public class Row {
         }
 
         return null;
+    }
+
+    public Pair<AbstractPlant<?>, Double> getClosestPlant(Location location) {
+        Pair<AbstractPlant<?>, Double> closest = null;
+        double distance = Double.MAX_VALUE;
+
+        for (Tile tile : tiles) {
+            AbstractPlant<?> plant = tile.getPlant();
+
+            if (plant == null) {
+                continue;
+            }
+
+            double plantDistance = plant.getLocation().distance(location);
+            if (plantDistance < distance) {
+                closest = new Pair<>(plant, plantDistance);
+                distance = plantDistance;
+            }
+        }
+
+        return closest;
     }
 
     public void addZombie(Zombie zombie) {

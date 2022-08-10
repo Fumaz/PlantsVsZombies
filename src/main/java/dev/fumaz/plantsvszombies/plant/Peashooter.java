@@ -34,7 +34,7 @@ public class Peashooter extends AbstractPlant<GlowSquid> {
 
     @Override
     public void onSpawn() {
-        // entity.setRotation(-90, 0);
+        entity.setRotation(-90, 0);
     }
 
     @Override

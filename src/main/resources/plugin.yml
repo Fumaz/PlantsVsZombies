@@ -7,3 +7,4 @@ website: https://fumaz.dev
 commands:
   yard: { }
   spawnzombie: { }
+  spawnhorde: { }

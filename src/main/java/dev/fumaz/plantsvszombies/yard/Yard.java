@@ -250,6 +250,12 @@ public class Yard implements FListener {
         team.addEntity(item);
     }
 
+    public void lose() {
+        player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "GAME OVER", ChatColor.WHITE + "The zombies ate your brains!");
+        tickTask.cancel();
+        unregister();
+    }
+
     private void addRow(Row row) {
         rows.add(row);
     }

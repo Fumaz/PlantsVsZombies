@@ -4,6 +4,7 @@ import dev.fumaz.commons.bukkit.command.PlayerCommandExecutor;
 import dev.fumaz.commons.math.Randoms;
 import dev.fumaz.plantsvszombies.yard.Yard;
 import dev.fumaz.plantsvszombies.zombie.Zombie;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
@@ -42,6 +43,7 @@ public class SpawnHordeCommand implements PlayerCommandExecutor {
             }
         });
 
+        Bukkit.getOnlinePlayers().forEach(p -> p.sendTitle(ChatColor.RED + "" + ChatColor.BOLD + "HORDE INCOMING", null));
         player.sendMessage(ChatColor.GREEN + "You have spawned a horde of zombies!");
     }
 

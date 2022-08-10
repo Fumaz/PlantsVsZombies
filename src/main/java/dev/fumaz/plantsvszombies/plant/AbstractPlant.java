@@ -31,6 +31,9 @@ public abstract class AbstractPlant<T extends Mob> implements FListener {
         this.lastAttack = -1;
         this.tick = 0;
 
+        entity.setMaxHealth(getMaxHealth() / 100);
+        entity.setHealth(getMaxHealth() / 100);
+
         register(JavaPlugin.getPlugin(PlantsVsZombies.class));
         onSpawn();
 
@@ -117,7 +120,7 @@ public abstract class AbstractPlant<T extends Mob> implements FListener {
             return;
         }
 
-        entity.damage(damage);
+        entity.damage(damage / 100);
         entity.setNoDamageTicks(0);
         entity.setMaximumNoDamageTicks(0);
 

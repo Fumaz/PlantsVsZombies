@@ -1,6 +1,7 @@
 package dev.fumaz.plantsvszombies.zombie;
 
 import dev.fumaz.commons.bukkit.interfaces.FListener;
+import dev.fumaz.commons.collection.Pair;
 import dev.fumaz.plantsvszombies.PlantsVsZombies;
 import dev.fumaz.plantsvszombies.plant.AbstractPlant;
 import dev.fumaz.plantsvszombies.yard.Row;
@@ -31,8 +32,8 @@ public abstract class AbstractZombie<T extends Mob> implements FListener {
         this.row = row;
         this.lastAttack = -1;
 
-        entity.setMaxHealth(getMaxHealth());
-        entity.setHealth(getMaxHealth());
+        entity.setMaxHealth(getMaxHealth() / 100);
+        entity.setHealth(getMaxHealth() / 100);
 
         register(JavaPlugin.getPlugin(PlantsVsZombies.class));
         onSpawn();
@@ -103,7 +104,7 @@ public abstract class AbstractZombie<T extends Mob> implements FListener {
             return;
         }
 
-        entity.damage(damage);
+        entity.damage(damage / 100);
         entity.setNoDamageTicks(0);
         entity.setMaximumNoDamageTicks(0);
 
@@ -117,14 +118,18 @@ public abstract class AbstractZombie<T extends Mob> implements FListener {
 
         onTick();
 
-        Tile tile = row.getTile(getLocation());
-        if (tile != null && tile.getPlant() != null) {
-            attack(tile.getPlant());
+        Pair<AbstractPlant<?>, Double> closest = row.getClosestPlant(getLocation());
+        if (closest != null && closest.getSecond() <= 1.5) {
+            attack(closest.getFirst());
             entity.setVelocity(new Vector(0, 0, 0));
             return;
         }
 
         entity.setVelocity(new Vector((4.7 / getSpeed()) * 0.02, 0, 0));
+
+        if (entity.getLocation().getBlockX() >= 13) {
+            row.getYard().lose();
+        }
     }
 
     public void die() {
